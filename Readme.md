@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Роман Березин](https://up.htmlacademy.ru/react/16/user/2486081).
-* Наставник: `Неизвестно`.
+* Наставник: [Arthur Litovko](https://htmlacademy.ru/profile/id6927).
 
 ---
 
