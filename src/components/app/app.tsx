@@ -1,7 +1,9 @@
 import MainPages from '../../pages/main-pages/main-pages';
-
-export default function App(): JSX.Element {
+type AppProps = {
+  rentalOffers: number;
+}
+export default function App({rentalOffers}: AppProps): JSX.Element {
   return (
-    <MainPages />
+    <MainPages rentalOffers={rentalOffers} />
   );
 }
