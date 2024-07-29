@@ -1,3 +1,3 @@
 export const Setting = {
-  RentalOffers: 10
+  RentalOffers: Math.floor(Math.random() * 10)
 };

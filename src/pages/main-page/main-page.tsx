@@ -1,10 +1,10 @@
 import PlaceCard from '../../components/place-card/place-card';
 
-type MainPagesProps = {
+type MainPageProps = {
   rentalOffers: number;
 }
 
-export default function MainPages({rentalOffers}: MainPagesProps): JSX.Element {
+export default function MainPage({rentalOffers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
