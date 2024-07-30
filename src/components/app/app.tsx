@@ -1,10 +1,11 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
-import {AppRoute} from '../../conts';
+import {AppRoute, AuthorizationStatus} from '../../conts';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritePage from '../../pages/favorite-page/favorite-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
   rentalOffers: number;
@@ -24,7 +25,13 @@ export default function App({rentalOffers}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<FavoritePage />}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.NoAuth}
+            >
+              <FavoritePage />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Offer}
