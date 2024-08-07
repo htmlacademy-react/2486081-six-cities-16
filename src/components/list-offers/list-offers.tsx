@@ -3,13 +3,15 @@ import PlaceCard from '../place-card/place-card';
 
 type ListOffersProps = {
 offers: OffersTypes[];
+classNamePlaceList: string;
+classNamePlace: string;
 }
 
-export default function ListOffers({offers}: ListOffersProps): JSX.Element {
+export default function ListOffers({offers, classNamePlaceList, classNamePlace}: ListOffersProps): JSX.Element {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={classNamePlaceList}>
       {offers.map((offer) => (
-        <PlaceCard key={offer.id} offers={offer}/>
+        <PlaceCard key={offer.id} offers={offer} className={classNamePlace} />
       ))}
     </div>
   );
