@@ -7,20 +7,21 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {OffersTypes} from '../../types/offers-types';
+import { commentsType } from '../../types/comments-types';
 
 type AppProps = {
-  rentalOffers: number;
   offers: OffersTypes[];
+  comments: commentsType[];
 }
 
-export default function App({rentalOffers, offers}: AppProps): JSX.Element {
+export default function App({offers, comments}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
           element={
-            <MainPage rentalOffers={rentalOffers} offers={offers} />
+            <MainPage offers={offers} />
           }
         />
         <Route
@@ -39,7 +40,7 @@ export default function App({rentalOffers, offers}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage offers={offers} />}
+          element={<OfferPage offers={offers} comments={comments}/>}
         />
         <Route
           path={AppRoute.Error}
