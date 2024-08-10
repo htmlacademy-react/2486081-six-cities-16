@@ -23,7 +23,7 @@ export default function ReviewsComments(): JSX.Element {
         onChange={onRatingsChange}
       >
         {RATINGS_TITLES.map((title) => (
-          <Fragment key={getIndex(RATINGS_TITLES, title)}>
+          <Fragment key={`${getIndex(RATINGS_TITLES, title)}-${rating}`}>
             <input className="form__rating-input visually-hidden" name="rating" value={getIndex(RATINGS_TITLES, title)} id={`${getIndex(RATINGS_TITLES, title)}-stars`} type="radio" />
             <label htmlFor={`${getIndex(RATINGS_TITLES, title)}-stars`} className="reviews__rating-label form__rating-label" title={title}>
               <svg className="form__star-image" width="37" height="33">

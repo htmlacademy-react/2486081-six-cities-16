@@ -7,8 +7,14 @@ export const getIndex = (items: string[], element: string): number => [...items]
 
 export const getCountStars = (rating: number): number => rating * 100 / 5;
 
+export const getFavoriteOffers = (offers: OffersTypes[]):OffersTypes[] => {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  return favoriteOffers;
+};
+
 export const getOffersByCity = (offers: OffersTypes[]) => {
-  const favotiteOffers: OffersTypes[] = offers.filter((favotiteOff) => favotiteOff.isFavorite);
+  const favotiteOffers = getFavoriteOffers(offers);
+
   const offersByCity: offersByCityType = {};
   for (const offer of favotiteOffers) {
     if (!offersByCity[offer.city.name]) {
