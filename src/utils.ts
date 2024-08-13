@@ -13,10 +13,8 @@ export const getFavoriteOffers = (offers: OffersTypes[]):OffersTypes[] => {
 };
 
 export const getOffersByCity = (offers: OffersTypes[]) => {
-  const favotiteOffers = getFavoriteOffers(offers);
-
   const offersByCity: offersByCityType = {};
-  for (const offer of favotiteOffers) {
+  for (const offer of offers) {
     if (!offersByCity[offer.city.name]) {
       offersByCity[offer.city.name] = [];
     }

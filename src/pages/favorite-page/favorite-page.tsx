@@ -1,26 +1,21 @@
+import {AppRoute, ClassTypeHeader} from '../../conts';
+import {useAppSelector} from '../../hooks';
+import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ListFavorites from '../../components/list-favorites/list-favorites';
-import {Link} from 'react-router-dom';
-import {AppRoute, ClassTypeHeader} from '../../conts';
-import {OffersTypes} from '../../types/offers-types';
-import {getOffersByCity} from '../../utils';
 
-type FavoritePageProps = {
-  offers: OffersTypes[];
-}
-
-export default function FavoritePage({offers}: FavoritePageProps): JSX.Element {
-  const lengthOffers = Object.keys(getOffersByCity(offers)).length;
+export default function FavoritePage(): JSX.Element {
+  const favoritesOffers = useAppSelector((state) => state.quantityFavoritesOffers);
 
   return (
-    <div className={`page ${lengthOffers === 0 ? 'page--favorites-empty' : ''}`} >
+    <div className={`page ${favoritesOffers === 0 ? 'page--favorites-empty' : ''}`} >
       <Header className={ClassTypeHeader.OTHERS} authorizationStatus />
-      {lengthOffers ?
+      {favoritesOffers ?
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <ListFavorites offers={offers} />
+              <ListFavorites />
             </section>
           </div>
         </main>
