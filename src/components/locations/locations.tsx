@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { CITIES } from '../../conts';
-import { useAppDispatch } from '../../hooks';
-import { currentCity } from '../../store/action';
+import {Link} from 'react-router-dom';
+import {CITIES} from '../../conts';
+import {useAppDispatch} from '../../hooks';
+import {currentCity} from '../../store/action';
 
 type LocationsProps = {
   cityCurrent: string ;

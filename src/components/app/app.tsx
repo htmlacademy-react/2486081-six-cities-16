@@ -1,27 +1,26 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import MainPage from '../../pages/main-page/main-page';
 import {AppRoute, AuthorizationStatus} from '../../conts';
+import {commentsType} from '../../types/comments-types';
+import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritePage from '../../pages/favorite-page/favorite-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {OffersTypes} from '../../types/offers-types';
-import { commentsType } from '../../types/comments-types';
+
 
 type AppProps = {
-  offers: OffersTypes[];
   comments: commentsType[];
 }
 
-export default function App({offers, comments}: AppProps): JSX.Element {
+export default function App({comments}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
           element={
-            <MainPage offers={offers} />
+            <MainPage />
           }
         />
         <Route
@@ -34,13 +33,13 @@ export default function App({offers, comments}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritePage offers={offers} />
+              <FavoritePage />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage offers={offers} comments={comments}/>}
+          element={<OfferPage comments={comments}/>}
         />
         <Route
           path={AppRoute.Error}

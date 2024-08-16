@@ -1,16 +1,17 @@
 import {AppRoute, ClassTypeHeader} from '../../conts';
 import {useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
-import Header from '../../components/header/header';
 import ListFavorites from '../../components/list-favorites/list-favorites';
+import Header from '../../components/header/header';
+
 
 export default function FavoritePage(): JSX.Element {
-  const favoritesOffers = useAppSelector((state) => state.quantityFavoritesOffers);
+  const favoriteCount = useAppSelector((state) => state.favoriteOffers).length;
 
   return (
-    <div className={`page ${favoritesOffers === 0 ? 'page--favorites-empty' : ''}`} >
+    <div className={`page ${favoriteCount === 0 ? 'page--favorites-empty' : ''}`} >
       <Header className={ClassTypeHeader.OTHERS} authorizationStatus />
-      {favoritesOffers ?
+      {favoriteCount ?
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">

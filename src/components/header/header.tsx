@@ -1,6 +1,7 @@
-import {Link} from 'react-router-dom';
 import {AppRoute, ClassTypeHeader} from '../../conts';
-import { useAppSelector } from '../../hooks';
+import {useAppSelector} from '../../hooks';
+import {Link} from 'react-router-dom';
+
 
 type HeaderProps = {
   className: string;
@@ -8,7 +9,7 @@ type HeaderProps = {
 }
 
 export default function Header({className, authorizationStatus}: HeaderProps): JSX.Element {
-  const favoriteCount = useAppSelector((state) => state.quantityFavoritesOffers);
+  const favoriteCount = useAppSelector((state) => state.favoriteOffers).length;
 
   return (
     <header className="header">
