@@ -7,14 +7,17 @@ import ButtonFavorite from '../button-favorite/button-favorite';
 import ReviewsCommentsList from '../reviews-comments-list/reviews-comments-list';
 import { commentsType } from '../../types/comments-types';
 
+
 type ReviewsOffersProps = {
   offers: OffersTypes[];
   comments: commentsType[];
 }
 
 export default function ReviewsOffers({offers, comments}: ReviewsOffersProps): JSX.Element {
+
   const {id: offerId} = useParams();
   const currentCard = offers.find((offer) => offer.id === offerId);
+
   return (
     <Fragment>
       <div className="offer__gallery-container container">
@@ -37,7 +40,7 @@ export default function ReviewsOffers({offers, comments}: ReviewsOffersProps): J
             <h1 className="offer__name">
               {currentCard?.title}
             </h1>
-            <ButtonFavorite className='' isFavorite={currentCard!.isFavorite} />
+            <ButtonFavorite className='' isFavorite={currentCard?.isFavorite} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">

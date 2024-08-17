@@ -13,16 +13,12 @@ export default function ListOffers({offers, classNamePlaceList, classNamePlace, 
 
   const cardMouseEnterHandler = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    if (onCardMouseEnter) {
-      onCardMouseEnter(evt.currentTarget.id);
-    }
+    onCardMouseEnter?.(evt.currentTarget.id);
   };
 
   const cardMouseLeaveHandler = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    if (onCardMouseEnter) {
-      onCardMouseEnter(undefined);
-    }
+    onCardMouseEnter?.(undefined);
   };
 
   return (

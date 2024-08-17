@@ -1,16 +1,15 @@
+import {typeButton} from '../../conts';
+
 type ButtonFavoriteProps = {
   className: string;
-  isFavorite: boolean;
+  isFavorite: boolean | undefined;
 }
-const typeButton = {
-  Default: 'default',
-};
 
 export default function ButtonFavorite({className, isFavorite}: ButtonFavoriteProps): JSX.Element {
 
-  const width = className === typeButton.Default ? 18 : 31;
-  const height = className === typeButton.Default ? 19 : 33;
-  const classButton = className === typeButton.Default ? 'place-card' : 'offer';
+  const width = className === typeButton ? 18 : 31;
+  const height = className === typeButton ? 19 : 33;
+  const classButton = className === typeButton ? 'place-card' : 'offer';
 
   return (
     <button className={`${classButton}__bookmark-button ${isFavorite ? `${classButton}__bookmark-button--active` : ''} button`} type="button">

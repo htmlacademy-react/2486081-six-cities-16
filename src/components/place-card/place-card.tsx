@@ -17,8 +17,8 @@ export default function PlaceCard({offers, className, handlerEnter, handlerLeave
   const width = className === ClassTypeOffers.FAVORITE ? 150 : 260;
   const height = className === ClassTypeOffers.FAVORITE ? 110 : 200;
 
-  return (
 
+  return (
     <article className={`${className}__card place-card` } id={id} onMouseEnter={handlerEnter} onMouseLeave={handlerLeave}>
       {isPremium ?
         <div className="place-card__mark">

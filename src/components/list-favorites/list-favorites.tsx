@@ -1,17 +1,15 @@
 import {ClassTypeOffers, ClassTypeOffersList} from '../../conts';
-import {OffersTypes} from '../../types/offers-types';
+import {useAppSelector} from '../../hooks';
 import {getOffersByCity} from '../../utils';
 import ListOffers from '../list-offers/list-offers';
 
-type ListFavoritesProps = {
-  offers: OffersTypes[];
-}
+export default function ListFavorites(): JSX.Element {
+  const offers = useAppSelector((state) => state.favoriteOffers);
+  const favoriteOffers = getOffersByCity(offers);
 
-export default function ListFavorites({offers}: ListFavoritesProps): JSX.Element {
-  const offersByCity = getOffersByCity(offers);
   return (
     <ul className="favorites__list">
-      {Object.entries(offersByCity).map(([city, offer]) => (
+      {Object.entries(favoriteOffers).map(([city, offer]) => (
         <li className="favorites__locations-items" key={city}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">

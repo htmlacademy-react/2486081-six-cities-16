@@ -133,4 +133,37 @@ export const offersMocks: OffersTypes[] = [
     images: ['https://16.design.htmlacademy.pro/static/hotel/18.jpg', 'https://16.design.htmlacademy.pro/static/hotel/19.jpg' , 'https://16.design.htmlacademy.pro/static/hotel/20.jpg' ,'https://16.design.htmlacademy.pro/static/hotel/1.jpg','https://16.design.htmlacademy.pro/static/hotel/2.jpg', 'https://16.design.htmlacademy.pro/static/hotel/3.jpg'],
     maxAdults: 2
   },
+  {
+    id: '2491ca2a-0427-4c4a-ba44-7576ab1d5bcds',
+    title: 'The Joshua Tree House',
+    type: 'hotel',
+    price: 465,
+    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/18.jpg',
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.85761,
+      longitude: 2.358490,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.5,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    bedrooms: 3,
+    goods: ['Heating', 'Heating', 'Heating', 'Heating', 'Heating', 'Heating'],
+    host: {
+      name: 'Richard Wells',
+      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      isPro: false
+    },
+    images: ['https://16.design.htmlacademy.pro/static/hotel/18.jpg', 'https://16.design.htmlacademy.pro/static/hotel/19.jpg' , 'https://16.design.htmlacademy.pro/static/hotel/20.jpg' ,'https://16.design.htmlacademy.pro/static/hotel/1.jpg','https://16.design.htmlacademy.pro/static/hotel/2.jpg', 'https://16.design.htmlacademy.pro/static/hotel/3.jpg'],
+    maxAdults: 2
+  },
 ];
