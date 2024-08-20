@@ -1,25 +1,17 @@
-import {Link} from 'react-router-dom';
-import {OffersTypes} from '../../types/offers-types';
 import {AppRoute, ClassTypeOffers} from '../../conts';
+import {PlaceCardProps} from './type';
 import {getCountStars} from '../../utils';
+import {Link} from 'react-router-dom';
 import ButtonFavorite from '../button-favorite/button-favorite';
-import { MouseEvent } from 'react';
 
-type PlaceCardProps = {
-  offers: OffersTypes;
-  className: string;
-  handlerEnter?: (evt: MouseEvent<HTMLLIElement>) => void;
-  handlerLeave?: (evt: MouseEvent<HTMLLIElement>) => void;
-}
 
-export default function PlaceCard({offers, className, handlerEnter, handlerLeave}: PlaceCardProps): JSX.Element {
+export default function PlaceCard({offers, className, handlerEnter, handlerLeave, handlerClick}: PlaceCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isPremium, isFavorite, rating} = offers;
+
   const width = className === ClassTypeOffers.FAVORITE ? 150 : 260;
   const height = className === ClassTypeOffers.FAVORITE ? 110 : 200;
-
-
   return (
-    <article className={`${className}__card place-card` } id={id} onMouseEnter={handlerEnter} onMouseLeave={handlerLeave}>
+    <article className={`${className}__card place-card` } id={id} onMouseEnter={handlerEnter} onMouseLeave={handlerLeave} onClick={handlerClick}>
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>

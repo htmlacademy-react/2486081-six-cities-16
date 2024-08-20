@@ -1,33 +1,40 @@
-type OffersCityLocation = {
+type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
-}
+};
 
-type OffersCity = {
+type City = {
   name: string;
-  location: OffersCityLocation;
-}
+  location: Location;
+};
 
-type OffersLocation = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-type OffersHost = {
+type Host = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-}
+};
 
-export type OffersTypes = {
+export type Offer = {
   id: string;
   title: string;
   type: string;
   price: number;
-  city: OffersCity;
-  location: OffersLocation;
+  city: City;
+  location: Location;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+};
+
+export type CurrentOffer = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: City;
+  location: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
@@ -35,7 +42,9 @@ export type OffersTypes = {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: OffersHost;
+  host: Host;
   images: string[];
   maxAdults: number;
 }
+
+export type Offers = Offer[];

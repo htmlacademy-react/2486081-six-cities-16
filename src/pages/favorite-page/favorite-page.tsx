@@ -6,11 +6,10 @@ import Header from '../../components/header/header';
 
 
 export default function FavoritePage(): JSX.Element {
-  const favoriteCount = useAppSelector((state) => state.favoriteOffers).length;
-
+  const favoriteCount = 0;
   return (
     <div className={`page ${favoriteCount === 0 ? 'page--favorites-empty' : ''}`} >
-      <Header className={ClassTypeHeader.OTHERS} authorizationStatus />
+      <Header className={ClassTypeHeader.OTHERS} />
       {favoriteCount ?
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">

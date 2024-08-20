@@ -1,13 +1,15 @@
-type userType = {
+type User = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-}
+};
 
-export type commentsType = {
+export type Comment = {
   id: string;
   comment: string;
   date: string;
   rating: number;
-  user: userType;
-}
+  user: User;
+};
+
+export type Comments = Comment[];

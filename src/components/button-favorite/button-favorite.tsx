@@ -1,12 +1,7 @@
+import {ButtonFavoriteProps} from './type';
 import {typeButton} from '../../conts';
 
-type ButtonFavoriteProps = {
-  className: string;
-  isFavorite: boolean | undefined;
-}
-
 export default function ButtonFavorite({className, isFavorite}: ButtonFavoriteProps): JSX.Element {
-
   const width = className === typeButton ? 18 : 31;
   const height = className === typeButton ? 19 : 33;
   const classButton = className === typeButton ? 'place-card' : 'offer';

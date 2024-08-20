@@ -1,10 +1,8 @@
-import {Fragment} from 'react';
 import {getCountStars} from '../../utils';
-import {commentsType} from '../../types/comments-types';
+import {commentsProps} from './type';
+import {Fragment} from 'react';
 
-type commentsProps ={
-  comments: commentsType[];
-}
+
 export default function ReviewsCommentsList({comments}: commentsProps): JSX.Element {
   return (
     <Fragment>

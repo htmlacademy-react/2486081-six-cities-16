@@ -15,6 +15,7 @@ export default function MainPage(): JSX.Element {
   const offersByCity = getOffersByCity(offers)[city];
 
   const [selectedPoint, setSelectedPoint] = useState<string| undefined>(undefined);
+
   const cardMouseEnterHandler = (itemIdCard: string | undefined) => {
     const allId = offersByCity.map((offer) => offer.id);
     const currentPoint = allId.find((id) => id === itemIdCard);
@@ -23,7 +24,7 @@ export default function MainPage(): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <Header className={ClassTypeHeader.MAIN} authorizationStatus/>
+      <Header className={ClassTypeHeader.MAIN}/>
       {!offersByCity ?
         <main className="page__main page__main--index page__main--index-empty">
           <h1 className="visually-hidden">Cities</h1>

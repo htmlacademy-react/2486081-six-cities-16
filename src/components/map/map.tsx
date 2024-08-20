@@ -1,28 +1,10 @@
+import {currentCustomIcon, defaultCustomIcon} from './const';
 import {useEffect, useRef} from 'react';
+import {layerGroup, Marker } from 'leaflet';
+import {MapProps} from './type';
 import useMap from '../../hooks/use-map';
-import {Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {OffersTypes} from '../../types/offers-types';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../conts';
 
-type MapProps = {
-  className: string;
-  offers:OffersTypes[];
-  selectedPoint: string | undefined;
-}
-
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
 
 export default function Map({className, offers, selectedPoint}:MapProps,): JSX.Element {
   const city = offers.map((offer) => offer.city);
