@@ -1,5 +1,11 @@
 import {ClassTypeHeader, ClassTypeOffers, ClassTypeOffersList} from '../../conts';
-import {useAppSelector} from '../../hooks';
+import {fetchChosenOffer, fetchOtherOffers} from '../../store/api-actions/api-actions-offers';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {offersProcess, setCity} from '../../store/offers-process/offers-process';
+import {sordCommentsByDate} from '../../utils';
+import {commentsProcess} from '../../store/comments-process/comments-process';
+import {fetchComments} from '../../store/api-actions/api-actions-comments';
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ListOffers from '../../components/list-offers/list-offers';
@@ -11,36 +17,43 @@ import LoadingPage from '../loading-page/loading-page';
 export default function OfferPage(): JSX.Element {
   const {id: currentId} = useParams<string>();
 
-  const currentCard = useAppSelector((state) => state.currentOffers);
-  const currentComments = useAppSelector((state) => state.comments);
-  const otherPlaces = useAppSelector((state) => state.otherPlaces);
+  const dispatch = useAppDispatch();
 
-  const offers = Array.from(otherPlaces);
+  const currentOffer = useAppSelector(offersProcess.selectors.chosenOffer);
+  const currentComments = useAppSelector(commentsProcess.selectors.comments);
+  const otherPlaces = useAppSelector(offersProcess.selectors.otherOffers);
+  const isOffersLoading = useAppSelector(offersProcess.selectors.isOffersLoading);
 
-  if (currentCard !== null) {
-    offers.push(currentCard);
-  }
+  const offers = currentOffer ? [currentOffer, ...otherPlaces].slice(0, 4) : [];
 
+  useEffect(() => {
+    Promise.all([dispatch(fetchChosenOffer(currentId!)), dispatch(fetchComments(currentId!)), dispatch(fetchOtherOffers(currentId!))]);
+  }, [dispatch, currentId]);
 
-  if (currentCard === null || currentCard.id !== currentId) {
+  useEffect(() => {
+    if (currentOffer) {
+      dispatch(setCity(currentOffer.city.name));
+    }
+  },[dispatch, currentOffer]);
+
+  if (isOffersLoading || currentOffer === null) {
     return (
       <LoadingPage />
     );
   }
-  const otherPlacesNew = offers.filter((off) => off.id !== currentId);
 
   return (
     <div className="page">
       <Header className={ClassTypeHeader.OTHERS} />
       <main className="page__main page__main--offer">
         <section className="offer">
-          <ReviewsOffers offer={currentCard} comments={currentComments}/>
+          <ReviewsOffers offer={currentOffer} comments={currentComments.toSorted(sordCommentsByDate)}/>
           <Map className='offer' offers={offers} selectedPoint={currentId}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <ListOffers offers={otherPlacesNew} classNamePlaceList={ClassTypeOffersList.OFFER} classNamePlace={ClassTypeOffers.OFFER} />
+            <ListOffers offers={otherPlaces.slice(0,3)} classNamePlaceList={ClassTypeOffersList.OFFER} classNamePlace={ClassTypeOffers.OFFER} />
           </section>
         </div>
       </main>

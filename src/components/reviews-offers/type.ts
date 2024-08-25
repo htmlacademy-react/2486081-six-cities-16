@@ -1,7 +1,6 @@
-import {Comments} from '../../types/comments-types';
-import {CurrentOffer} from '../../types/offers-types';
+import {ChosenOffer, Comments} from '../../types/data';
 
 export type ReviewsOffersProps = {
-  offer: CurrentOffer;
+  offer: ChosenOffer;
   comments: Comments;
 };

@@ -1,4 +1,4 @@
-import {Offers} from '../../types/offers-types';
+import {Offers} from '../../types/data';
 
 export type ListOffersProps = {
   offers: Offers;

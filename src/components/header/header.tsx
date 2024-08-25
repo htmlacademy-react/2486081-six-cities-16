@@ -1,15 +1,15 @@
 import {AppRoute, AuthorizationStatus, ClassTypeHeader} from '../../conts';
+import {logoutAuthData} from '../../store/api-actions/api-actions-user';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {logoutAuthData} from '../../store/api-actions';
+import {favoriteProcess} from '../../store/favorite-process/favorite-process';
+import {userProcess} from '../../store/user-process/user-process';
+import {HeaderProps} from './type';
 import {Link} from 'react-router-dom';
-import { HeaderProps } from './type';
-
 
 export default function Header({className}: HeaderProps): JSX.Element {
-  const favoriteCount = 0; //
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userName = useAppSelector((state) => state.user.email);
-
+  const favoriteCount = useAppSelector(favoriteProcess.selectors.favorite).length;
+  const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
+  const user = useAppSelector(userProcess.selectors.user);
   const dispatch = useAppDispatch();
 
   const onDeleteToken = () => {
@@ -38,7 +38,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">{userName}</span>
+                      <span className="header__user-name user__name">{user?.email}</span>
                       <span className="header__favorite-count">{favoriteCount}</span>
                     </Link>
                   </li>

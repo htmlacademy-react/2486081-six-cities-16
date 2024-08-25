@@ -1,10 +1,11 @@
 import {ClassTypeOffers, ClassTypeOffersList} from '../../conts';
 import {useAppSelector} from '../../hooks';
+import {favoriteProcess} from '../../store/favorite-process/favorite-process';
 import {getOffersByCity} from '../../utils';
 import ListOffers from '../list-offers/list-offers';
 
 export default function ListFavorites(): JSX.Element {
-  const offers = useAppSelector((state) => state.favoriteOffers);
+  const offers = useAppSelector(favoriteProcess.selectors.favorite);
   const favoriteOffers = getOffersByCity(offers);
 
   return (

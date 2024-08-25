@@ -36,8 +36,10 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
 
       setMap(instance);
       isRenderedRef.current = true;
+    } else {
+      map?.setView([city[0].location.latitude, city[0].location.longitude], city[0].location.zoom);
     }
-  }, [mapRef, city]);
+  }, [mapRef, city, map]);
 
   return map;
 }

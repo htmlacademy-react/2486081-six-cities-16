@@ -1,14 +1,35 @@
-import {AuthorizationStatus} from '../../conts';
+import {AppRoute, AuthorizationStatus} from '../../conts';
 import {ReviewsOffersProps} from './type';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {favoriteProcess} from '../../store/favorite-process/favorite-process';
 import {getCountStars} from '../../utils';
+import {userProcess} from '../../store/user-process/user-process';
+import {addFavorite} from '../../store/api-actions/api-actions-favorite';
+import {useNavigate} from 'react-router-dom';
 import {Fragment} from 'react';
 import ReviewsCommentsList from '../reviews-comments-list/reviews-comments-list';
 import ReviewsComments from '../reviews-comments/reviews-comments';
 import ButtonFavorite from '../button-favorite/button-favorite';
 
 export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
+  const favorite = useAppSelector(favoriteProcess.selectors.favorite);
+
+  const checkFavoriteOffer = favorite.find((off) => off.id === offer.id);
+  const setStatus = () => checkFavoriteOffer === undefined ? 1 : 0;
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    }
+    dispatch(addFavorite({
+      id: offer.id,
+      status: setStatus()
+    }));
+  };
 
   return (
     <Fragment>
@@ -32,7 +53,7 @@ export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX
             <h1 className="offer__name">
               {offer.title}
             </h1>
-            <ButtonFavorite className='' isFavorite={offer.isFavorite} />
+            <ButtonFavorite className='' isFavorite={offer.isFavorite} onFavoriteClick={handleFavoriteClick} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
@@ -90,7 +111,7 @@ export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX
           <section className="offer__reviews reviews">
             <ReviewsCommentsList comments={comments} />
             {authorizationStatus === AuthorizationStatus.Auth ?
-              <ReviewsComments />
+              <ReviewsComments offerId={offer.id}/>
               : ''}
           </section>
         </div>

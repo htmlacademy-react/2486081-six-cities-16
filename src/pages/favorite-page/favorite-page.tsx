@@ -1,4 +1,5 @@
 import {AppRoute, ClassTypeHeader} from '../../conts';
+import {favoriteProcess} from '../../store/favorite-process/favorite-process';
 import {useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
 import ListFavorites from '../../components/list-favorites/list-favorites';
@@ -6,11 +7,12 @@ import Header from '../../components/header/header';
 
 
 export default function FavoritePage(): JSX.Element {
-  const favoriteCount = 0;
+  const favoriteCount = useAppSelector(favoriteProcess.selectors.favorite);
+
   return (
-    <div className={`page ${favoriteCount === 0 ? 'page--favorites-empty' : ''}`} >
+    <div className={`page ${favoriteCount.length === 0 ? 'page--favorites-empty' : ''}`} >
       <Header className={ClassTypeHeader.OTHERS} />
-      {favoriteCount ?
+      {favoriteCount.length !== 0 ?
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">

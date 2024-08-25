@@ -8,14 +8,14 @@ export const URL_MARKER_CURRENT =
 
 
 export const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconUrl: '/img/pin.svg',
+  iconSize: [30, 40],
+  iconAnchor: [30, 40]
 });
 
 
 export const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconUrl: '/img/pin-active.svg',
+  iconSize: [30, 40],
+  iconAnchor: [30, 40]
 });

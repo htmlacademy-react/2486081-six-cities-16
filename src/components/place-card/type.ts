@@ -1,4 +1,4 @@
-import {Offer} from '../../types/offers-types';
+import {Offer} from '../../types/data';
 import {MouseEvent} from 'react';
 
 export type PlaceCardProps = {

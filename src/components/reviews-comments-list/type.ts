@@ -1,4 +1,4 @@
-import { Comments } from '../../types/comments-types';
+import {Comments} from '../../types/data';
 
 export type commentsProps ={
   comments: Comments;

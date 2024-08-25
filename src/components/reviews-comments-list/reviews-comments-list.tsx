@@ -1,14 +1,15 @@
-import {getCountStars} from '../../utils';
+import {getCountStars,getDateForman} from '../../utils';
 import {commentsProps} from './type';
 import {Fragment} from 'react';
 
 
 export default function ReviewsCommentsList({comments}: commentsProps): JSX.Element {
+
   return (
     <Fragment>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {comments.map((comment) => (
+        {comments.slice(0, 10).map((comment) => (
           <li className="reviews__item" key={comment.id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -28,7 +29,7 @@ export default function ReviewsCommentsList({comments}: commentsProps): JSX.Elem
               <p className="reviews__text">
                 {comment.comment}
               </p>
-              <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+              <time className="reviews__time" dateTime={comment.date.slice(0, 10)}>{getDateForman(comment.date)}</time>
             </div>
           </li>
         ))}

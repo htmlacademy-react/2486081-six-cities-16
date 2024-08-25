@@ -1,17 +1,22 @@
-import {AppRoute, AuthorizationStatus, ClassTypeHeader} from '../../conts';
+import {AppRoute, AuthorizationStatus, CITIES, ClassTypeHeader} from '../../conts';
+import {loginAuthData} from '../../store/api-actions/api-actions-user';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {FormEvent, useRef} from 'react';
-import {getAuthorizationStatus, loginAuthData} from '../../store/api-actions';
 import Header from '../../components/header/header';
+import {setCity } from '../../store/offers-process/offers-process';
+import { userProcess } from '../../store/user-process/user-process';
+import { fetchFavorite } from '../../store/api-actions/api-actions-favorite';
+import { fetchOffers } from '../../store/api-actions/api-actions-offers';
 
 
 export default function LoginPage(): JSX.Element {
-  const authorization = useAppSelector((state) => state.authorizationStatus);
+  const authorization = useAppSelector(userProcess.selectors.authorizationStatus);
+  const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
+
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onLoginSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -22,19 +27,22 @@ export default function LoginPage(): JSX.Element {
           email: email.current.value,
           password: password.current.value,
         }));
-      dispatch(getAuthorizationStatus());
-
-      if (authorization === AuthorizationStatus.Auth) {
-        navigate(AppRoute.Root);
-      }
+    }
+    if (authorization === AuthorizationStatus.Auth) {
+      <Navigate to={AppRoute.Root} />;
     }
   };
 
   if (authorization === AuthorizationStatus.Auth) {
+    dispatch(fetchFavorite());
+    dispatch(fetchOffers());
     return (
       <Navigate to={AppRoute.Root} />
     );
   }
+  const onCityClick = () => {
+    dispatch(setCity(randomCity));
+  };
 
   return (
     <div className="page page--gray page--login">
@@ -57,8 +65,8 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Root}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={onCityClick}>
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>

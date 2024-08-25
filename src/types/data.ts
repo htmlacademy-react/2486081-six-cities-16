@@ -28,17 +28,7 @@ export type Offer = {
   previewImage: string;
 };
 
-export type CurrentOffer = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  city: City;
-  location: Location;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-  previewImage: string;
+export type DescriptionOffer = {
   description: string;
   bedrooms: number;
   goods: string[];
@@ -47,4 +37,20 @@ export type CurrentOffer = {
   maxAdults: number;
 }
 
+type User = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+};
+
+export type Comment = {
+  id: string;
+  comment: string;
+  date: string;
+  rating: number;
+  user: User;
+};
+
+export type ChosenOffer = Offer & DescriptionOffer;
+export type Comments = Comment[];
 export type Offers = Offer[];
