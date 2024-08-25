@@ -5,7 +5,7 @@ import {Comments} from '../../types/data';
 
 type initialStateComments = {
   comments: Comments;
-  status: string;
+  status: CommentStatus ;
 };
 
 const initialState: initialStateComments = {

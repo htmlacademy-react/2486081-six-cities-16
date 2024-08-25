@@ -2,7 +2,7 @@ import {AppRoute, AuthorizationStatus} from '../../conts';
 import {ReviewsOffersProps} from './type';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {favoriteProcess} from '../../store/favorite-process/favorite-process';
-import {getCountStars} from '../../utils';
+import {getCountStars, getFirstLetterUperCase} from '../../utils';
 import {userProcess} from '../../store/user-process/user-process';
 import {addFavorite} from '../../store/api-actions/api-actions-favorite';
 import {useNavigate} from 'react-router-dom';
@@ -64,7 +64,7 @@ export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
-              {offer.type}
+              {getFirstLetterUperCase(offer.type)}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
               {offer.bedrooms !== 1 ? `${offer.bedrooms} Bedrooms` : '1 Bedroom'}

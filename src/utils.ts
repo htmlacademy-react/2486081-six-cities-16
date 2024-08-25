@@ -35,3 +35,7 @@ export const sordCommentsByDate = (dateA: Comment, dateB: Comment): number => {
   const date = Number(dateA.date < dateB.date) - Number(dateA.date > dateB.date);
   return date;
 };
+
+export const getFirstLetterUperCase = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
+
+

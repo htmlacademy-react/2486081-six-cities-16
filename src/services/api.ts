@@ -1,17 +1,8 @@
-import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
 import {REQUEST_TIMEOUT, URL} from '../conts';
 import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token';
-
-import {store} from '../store';
-import {setError} from '../store/action';
-import {clearErrorAction} from '../store/api-actions';
-
-export const processErrorHandle = (message: string): void => {
-  store.dispatch(setError(message));
-  store.dispatch(clearErrorAction());
-};
-
+import {toast} from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -27,23 +18,23 @@ const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT
   });
 
-  api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-      const token = getToken();
+  api.interceptors.request.use((config) => {
+    const token = getToken();
 
-      if (token && config.headers) {
-        config.headers['x-token'] = token;
-      }
-
-      return config;
+    if (token && config.headers) {
+      config.headers['x-token'] = token;
     }
+
+    return config;
+  }
   );
 
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<{error: string}>) => {
+    (error: AxiosError<AxiosResponse>) => {
       if (error.request && shouldDisplayError(error.response)) {
-        processErrorHandle(error.response.data.error);
+        const message = error.response?.data.message;
+        toast.warn(message);
       }
 
       throw error;

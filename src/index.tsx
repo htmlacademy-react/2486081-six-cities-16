@@ -6,6 +6,8 @@ import {store} from './store';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchAuthorizationStatus());
 store.dispatch(fetchOffers());
@@ -19,6 +21,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App/>
+      <ToastContainer / >
     </Provider>
   </React.StrictMode>
 );

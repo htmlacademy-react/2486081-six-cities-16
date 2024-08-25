@@ -11,16 +11,10 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingPage from '../../pages/loading-page/loading-page';
 
+
 export default function App(): JSX.Element {
   const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
   const isOffersLoading = useAppSelector(offersProcess.selectors.isOffersLoading);
-  const isError = useAppSelector(offersProcess.selectors.isError);
-
-  if (isError) {
-    return (
-      <NotFoundPage />
-    );
-  }
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (

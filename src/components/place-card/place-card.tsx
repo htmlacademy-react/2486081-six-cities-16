@@ -1,6 +1,6 @@
 import {AppRoute, AuthorizationStatus, ClassTypeOffers} from '../../conts';
 import {PlaceCardProps} from './type';
-import {getCountStars} from '../../utils';
+import {getCountStars, getFirstLetterUperCase} from '../../utils';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addFavorite} from '../../store/api-actions/api-actions-favorite';
@@ -60,7 +60,7 @@ export default function PlaceCard({offers, className, handlerEnter, handlerLeave
         <h2 className="place-card__name">
           <Link to={AppRoute.Offer.replace(':id', offers.id)}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{getFirstLetterUperCase(type)}</p>
       </div>
     </article>
   );

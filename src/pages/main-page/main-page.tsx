@@ -13,7 +13,6 @@ export default function MainPage(): JSX.Element {
   const offers = useAppSelector(sortedOffers);
   const city = useAppSelector(offersProcess.selectors.city);
   const dispatch = useAppDispatch();
-
   const [selectedPoint, setSelectedPoint] = useState<string| undefined>(undefined);
 
   const handleCityClick = (evt : MouseEvent<HTMLElement>) => {
@@ -27,11 +26,10 @@ export default function MainPage(): JSX.Element {
     setSelectedPoint(currentPoint);
   };
 
-
   return (
     <div className="page page--gray page--main">
       <Header className={ClassTypeHeader.MAIN}/>
-      {!offers ?
+      {offers.length === 0 ?
         <main className="page__main page__main--index page__main--index-empty">
           <h1 className="visually-hidden">Cities</h1>
           <Locations cityCurrent={city} onCityClick={handleCityClick}/>
