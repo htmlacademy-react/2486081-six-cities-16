@@ -1,18 +1,9 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
+import axios, {AxiosInstance, isAxiosError} from 'axios';
 import {REQUEST_TIMEOUT, URL} from '../conts';
-import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token';
 import {toast} from 'react-toastify';
 
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
-};
-
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
-
-const createAPI = (): AxiosInstance => {
+export const createAPI = (): AxiosInstance => {
   const api = axios.create({
     baseURL: URL,
     timeout: REQUEST_TIMEOUT
@@ -29,16 +20,17 @@ const createAPI = (): AxiosInstance => {
   }
   );
 
-  api.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError<AxiosResponse>) => {
-      if (error.request && shouldDisplayError(error.response)) {
-        const message = error.response?.data.message;
-        toast.warn(message);
+  api.interceptors.response.use(null, (error) => {
+    if (isAxiosError(error)) {
+      if (error.code === 'ERR_NETWORK') {
+        toast.error('Network connection error');
       }
 
-      throw error;
+      if (error.response && error.response.status >= 500) {
+        toast.error('Server response error');
+      }
     }
+  }
   );
 
   return api;
