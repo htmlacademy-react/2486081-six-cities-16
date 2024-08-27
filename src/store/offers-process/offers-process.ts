@@ -1,6 +1,6 @@
 import {fetchChosenOffer, fetchOffers, fetchOtherOffers} from '../api-actions/api-actions-offers';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {NameSpace, SortType} from '../../conts';
+import {NameSpace, SortingType} from '../../conts';
 import {ChosenOffer, Offers} from '../../types/data';
 import {addFavorite} from '../api-actions/api-actions-favorite';
 
@@ -92,13 +92,13 @@ export const sortedOffers = createSelector(
   (city, offers, filter) =>
     offers.filter((offer) => offer.city.name === city).toSorted((offerA, offerB) => {
       switch (filter) {
-        case SortType.Popular:
+        case SortingType.Popular:
           return 1;
-        case SortType.PriceLowToHigh:
+        case SortingType.PriceLowToHigh:
           return offerB.price - offerA.price;
-        case SortType.PriceHighToLow:
+        case SortingType.PriceHighToLow:
           return offerA.price - offerB.price;
-        case SortType.TopRatedFirst:
+        case SortingType.TopRatedFirst:
           return offerB.rating - offerA.rating;
         default:
           return 1;
