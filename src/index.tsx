@@ -1,5 +1,4 @@
 import {fetchAuthorizationStatus} from './store/api-actions/api-actions-user';
-import {fetchFavorite} from './store/api-actions/api-actions-favorite';
 import {fetchOffers} from './store/api-actions/api-actions-offers';
 import {Provider} from 'react-redux';
 import {store} from './store';
@@ -11,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchAuthorizationStatus());
 store.dispatch(fetchOffers());
-store.dispatch(fetchFavorite());
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

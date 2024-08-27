@@ -1,4 +1,12 @@
-export const RATINGS_TITLES = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+export const messageForPassword = 'Пароль должен состоять из латинских букв и цифр и символов пример "1q"';
+
+export const RATINGS_TITLES = [
+  {title:'perfect', id: '5-stars', value: '5', key: '1-id'},
+  {title:'good', id: '4-stars', value: '4', key: '2-id'},
+  {title:'not bad', id: '3-stars', value: '3', key: '3-id'},
+  {title:'badly', id: '2-stars', value: '2', key: '4-id'},
+  {title:'terribly', id: '1-stars', value: '1', key: '5-id'}
+];
 
 export const TYPES_SORT = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
@@ -8,7 +16,7 @@ export const URL = 'https://16.design.htmlacademy.pro/six-cities';
 
 export const REQUEST_TIMEOUT = 5000;
 
-export const typeButton = 'default';
+export const BUTTON_CLASS = 'default';
 
 export enum AppRoute {
   Root = '/',
@@ -44,7 +52,8 @@ export enum CommentStatus {
   Loaded = 'loaded',
   FailToLoad = 'FailToLoad',
 }
-export enum SortType {
+
+export enum SortingType {
   Popular = 'popular',
   PriceLowToHigh = 'Price: low to high',
   PriceHighToLow = 'Price: high to low',

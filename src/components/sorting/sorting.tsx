@@ -8,6 +8,7 @@ export default function Sorting(): JSX.Element {
   const [openList, setOpenList] = useState(false);
   const filter = useAppSelector(offersProcess.selectors.filter);
   const dispatch = useAppDispatch();
+  const sortType = useAppSelector(offersProcess.selectors.filter);
 
   const onListSortHandler = () => {
     setOpenList(!openList);
@@ -15,6 +16,7 @@ export default function Sorting(): JSX.Element {
 
   function onSordHandler(evt : MouseEvent<HTMLElement>) {
     evt.preventDefault();
+    setOpenList(!openList);
     dispatch(setFilter((evt.target as HTMLElement).innerText));
   }
 
@@ -31,7 +33,7 @@ export default function Sorting(): JSX.Element {
         onClick={onSordHandler}
       >
         {TYPES_SORT.map((item) =>
-          <li className={`places__option ${item === 'Popular' ? 'places__option--active' : ''}`} tabIndex={getIndex([...TYPES_SORT].reverse(),item)} key={item}>{item} </li>
+          <li className={`places__option ${item === sortType ? 'places__option--active' : ''}`} tabIndex={getIndex([...TYPES_SORT].reverse(),item)} key={item}>{item} </li>
         )}
       </ul>
     </form>

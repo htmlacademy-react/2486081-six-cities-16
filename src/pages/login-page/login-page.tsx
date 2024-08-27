@@ -1,4 +1,4 @@
-import {AppRoute, AuthorizationStatus, CITIES, ClassTypeHeader} from '../../conts';
+import {AppRoute, AuthorizationStatus, CITIES, ClassTypeHeader, messageForPassword} from '../../conts';
 import {loginAuthData} from '../../store/api-actions/api-actions-user';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link, Navigate} from 'react-router-dom';
@@ -58,7 +58,7 @@ export default function LoginPage(): JSX.Element {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref={password}/>
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref={password} pattern="^(?=.*[a-zA-Z])(?=.*\d).*$" title={messageForPassword}/>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
