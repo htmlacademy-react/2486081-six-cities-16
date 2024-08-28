@@ -1,6 +1,22 @@
-export const Setting = {
-  RentalOffers: Math.floor(Math.random() * 10)
-};
+export const messageForPassword = 'Пароль должен состоять из латинских букв и цифр и символов пример "1q"';
+
+export const RATINGS_TITLES = [
+  {title:'perfect', id: '5-stars', value: '5', key: '1-id'},
+  {title:'good', id: '4-stars', value: '4', key: '2-id'},
+  {title:'not bad', id: '3-stars', value: '3', key: '3-id'},
+  {title:'badly', id: '2-stars', value: '2', key: '4-id'},
+  {title:'terribly', id: '1-stars', value: '1', key: '5-id'}
+];
+
+export const TYPES_SORT = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const URL = 'https://16.design.htmlacademy.pro/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const BUTTON_CLASS = 'default';
 
 export enum AppRoute {
   Root = '/',
@@ -14,6 +30,34 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Comments = '/comments',
+  Favorite = '/favorite'
+}
+
+export enum NameSpace {
+  User = 'USER',
+  Offers = 'OFFERS',
+  Comments = 'COMMENTS',
+  Favorite = 'FAVORITE',
+  Data = 'DATA'
+}
+
+export enum CommentStatus {
+  Loading = 'loading',
+  Loaded = 'loaded',
+  FailToLoad = 'FailToLoad',
+}
+
+export enum SortingType {
+  Popular = 'popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first'
 }
 
 export const ClassTypeOffersList = {
@@ -34,14 +78,3 @@ export const ClassTypeHeader = {
   OTHERS: ''
 };
 
-export const RATINGS_TITLES = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
-
-export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
-
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
-
-export const typeButton = 'default';

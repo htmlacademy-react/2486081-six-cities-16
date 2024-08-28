@@ -1,18 +1,16 @@
-import {typeButton} from '../../conts';
+import {ButtonFavoriteProps} from './type';
+import {BUTTON_CLASS} from '../../conts';
 
-type ButtonFavoriteProps = {
-  className: string;
-  isFavorite: boolean | undefined;
-}
+export default function ButtonFavorite({className, isFavorite, onFavoriteClick}: ButtonFavoriteProps): JSX.Element {
 
-export default function ButtonFavorite({className, isFavorite}: ButtonFavoriteProps): JSX.Element {
-
-  const width = className === typeButton ? 18 : 31;
-  const height = className === typeButton ? 19 : 33;
-  const classButton = className === typeButton ? 'place-card' : 'offer';
+  const width = className === BUTTON_CLASS ? 18 : 31;
+  const height = className === BUTTON_CLASS ? 19 : 33;
+  const classButton = className === BUTTON_CLASS ? 'place-card' : 'offer';
 
   return (
-    <button className={`${classButton}__bookmark-button ${isFavorite ? `${classButton}__bookmark-button--active` : ''} button`} type="button">
+    <button className={`${classButton}__bookmark-button ${isFavorite ? `${classButton}__bookmark-button--active` : ''} button`} type="button"
+      onClick={onFavoriteClick}
+    >
       <svg className={`${classButton}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
@@ -20,3 +18,4 @@ export default function ButtonFavorite({className, isFavorite}: ButtonFavoritePr
     </button>
   );
 }
+

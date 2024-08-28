@@ -1,9 +1,15 @@
-import {CommentsMocks} from './mocks/comments-mocks';
+import {fetchAuthorizationStatus} from './store/api-actions/api-actions-user';
+import {fetchOffers} from './store/api-actions/api-actions-offers';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+store.dispatch(fetchAuthorizationStatus());
+store.dispatch(fetchOffers());
 
 
 const root = ReactDOM.createRoot(
@@ -13,9 +19,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        comments = {CommentsMocks}
-      />
+      <App/>
+      <ToastContainer / >
     </Provider>
   </React.StrictMode>
 );

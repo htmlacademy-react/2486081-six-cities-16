@@ -1,31 +1,56 @@
-import {Fragment, useState} from 'react';
-import {RATINGS_TITLES} from '../../conts';
-import {getIndex} from '../../utils';
+import {FormEvent, Fragment, useEffect, useRef, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {ReviewsCommentsProps} from './type';
+import {CommentStatus, RATINGS_TITLES} from '../../conts';
+import {sendComments} from '../../store/api-actions/api-actions-comments';
+import {commentsProcess} from '../../store/comments-process/comments-process';
+import { toast } from 'react-toastify';
 
-export default function ReviewsComments(): JSX.Element {
-  const [rating, setRating] = useState(0);
-  const [text, setText] = useState('');
+export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.Element {
+  const commentStatus = useAppSelector(commentsProcess.selectors.status);
+  const formElement = useRef<HTMLFormElement>(null);
+  const [rating, setRating] = useState<number>(0);
+  const [text, setText] = useState<string>('');
+  const dispatch = useAppDispatch();
 
-  const onRatingsChange = (evt: React.FormEvent) => {
-    if (evt.target instanceof HTMLInputElement) {
-      setRating(Number(evt.target.value));
+  useEffect(() => {
+    if (commentStatus === CommentStatus.FailToLoad) {
+      toast.error('Couldn`t send a comment');
     }
+
+    formElement.current?.reset();
+    setRating(0);
+    setText('');
+  }, [commentStatus]);
+
+  const handlerReviewsClick = (evt: FormEvent) => {
+    evt.preventDefault();
+
+    dispatch(sendComments({
+      id: offerId,
+      comment: text,
+      rating: rating
+    }));
   };
 
-  const onTextChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(evt.target.value);
+  const validateDescription = () => {
+    if (text.length < 50 || text.length > 300 || rating === 0) {
+      return true;
+    }
+    return false;
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" ref={formElement} onSubmit={handlerReviewsClick}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating"
-        onChange={onRatingsChange}
-      >
-        {RATINGS_TITLES.map((title) => (
-          <Fragment key={`${getIndex(RATINGS_TITLES, title)}-${rating}`}>
-            <input className="form__rating-input visually-hidden" name="rating" value={getIndex(RATINGS_TITLES, title)} id={`${getIndex(RATINGS_TITLES, title)}-stars`} type="radio" />
-            <label htmlFor={`${getIndex(RATINGS_TITLES, title)}-stars`} className="reviews__rating-label form__rating-label" title={title}>
+      <div className="reviews__rating-form form__rating">
+        {RATINGS_TITLES.map((item) => (
+          <Fragment key={item.key}>
+            <input className="form__rating-input visually-hidden" name="rating" value={item.value} id={item.id} type="radio"
+              checked={Number(item.value) === rating}
+              onChange={(evt) => setRating(Number(evt.target.value))}
+            />
+            <label htmlFor={item.id} className="reviews__rating-label form__rating-label" title={item.title}>
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>
@@ -35,7 +60,7 @@ export default function ReviewsComments(): JSX.Element {
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
         value={text}
-        onChange={onTextChange}
+        onChange={(evt) => setText(evt.target.value)}
       >
         {text}
       </textarea>
@@ -43,7 +68,7 @@ export default function ReviewsComments(): JSX.Element {
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={validateDescription()}>Submit</button>
       </div>
     </form>
   );

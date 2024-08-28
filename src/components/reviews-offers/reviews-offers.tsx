@@ -1,28 +1,41 @@
+import {AppRoute, AuthorizationStatus} from '../../conts';
+import {ReviewsOffersProps} from './type';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {favoriteProcess} from '../../store/favorite-process/favorite-process';
+import {getCountStars, getFirstLetterUperCase} from '../../utils';
+import {userProcess} from '../../store/user-process/user-process';
+import {addFavorite} from '../../store/api-actions/api-actions-favorite';
+import {useNavigate} from 'react-router-dom';
 import {Fragment} from 'react';
-import ReviewsComments from '../reviews-comments/reviews-comments';
-import { OffersTypes } from '../../types/offers-types';
-import { useParams } from 'react-router-dom';
-import { getCountStars } from '../../utils';
-import ButtonFavorite from '../button-favorite/button-favorite';
 import ReviewsCommentsList from '../reviews-comments-list/reviews-comments-list';
-import { commentsType } from '../../types/comments-types';
+import ReviewsComments from '../reviews-comments/reviews-comments';
+import ButtonFavorite from '../button-favorite/button-favorite';
 
+export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX.Element {
+  const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
+  const favorite = useAppSelector(favoriteProcess.selectors.favorite);
 
-type ReviewsOffersProps = {
-  offers: OffersTypes[];
-  comments: commentsType[];
-}
+  const checkFavoriteOffer = favorite.find((off) => off.id === offer.id);
+  const setStatus = () => checkFavoriteOffer === undefined ? 1 : 0;
 
-export default function ReviewsOffers({offers, comments}: ReviewsOffersProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const {id: offerId} = useParams();
-  const currentCard = offers.find((offer) => offer.id === offerId);
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    }
+    dispatch(addFavorite({
+      id: offer.id,
+      status: setStatus()
+    }));
+  };
 
   return (
     <Fragment>
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {currentCard?.images.map((img) =>(
+          {offer.images.map((img) =>(
             <div className="offer__image-wrapper" key={img}>
               <img className="offer__image" src={img} alt="Photo studio"/>
             </div>
@@ -31,43 +44,43 @@ export default function ReviewsOffers({offers, comments}: ReviewsOffersProps): J
       </div>
       <div className="offer__container container">
         <div className="offer__wrapper">
-          {currentCard?.isPremium ?
+          {offer.isPremium ?
             <div className="offer__mark">
               <span>Premium</span>
             </div>
             : ''}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">
-              {currentCard?.title}
+              {offer.title}
             </h1>
-            <ButtonFavorite className='' isFavorite={currentCard?.isFavorite} />
+            <ButtonFavorite className='' isFavorite={offer.isFavorite} onFavoriteClick={handleFavoriteClick} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
-              <span style={{width: `${getCountStars(Number(currentCard?.rating))}%`}}></span>
+              <span style={{width: `${getCountStars(Number(offer.rating))}%`}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
-            <span className="offer__rating-value rating__value">{currentCard?.rating}</span>
+            <span className="offer__rating-value rating__value">{offer.rating}</span>
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
-              {currentCard?.type}
+              {getFirstLetterUperCase(offer.type)}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
-              {currentCard?.bedrooms !== 1 ? `${currentCard?.bedrooms} Bedrooms` : '1 Bedroom'}
+              {offer.bedrooms !== 1 ? `${offer.bedrooms} Bedrooms` : '1 Bedroom'}
             </li>
             <li className="offer__feature offer__feature--adults">
-              {currentCard?.maxAdults !== 1 ? `Max ${currentCard?.maxAdults} adults` : 'Max 1 adult'}
+              {offer.maxAdults !== 1 ? `Max ${offer.maxAdults} adults` : 'Max 1 adult'}
             </li>
           </ul>
           <div className="offer__price">
-            <b className="offer__price-value">&euro;{currentCard?.price}</b>
+            <b className="offer__price-value">&euro;{offer.price}</b>
             <span className="offer__price-text">&nbsp;night</span>
           </div>
           <div className="offer__inside">
             <h2 className="offer__inside-title">What&apos;s inside</h2>
             <ul className="offer__inside-list">
-              {currentCard?.goods.map((good) => (
+              {offer.goods.map((good) => (
                 <li className="offer__inside-item" key={good}>
                   {good}
                 </li>
@@ -77,30 +90,33 @@ export default function ReviewsOffers({offers, comments}: ReviewsOffersProps): J
           <div className="offer__host">
             <h2 className="offer__host-title">Meet the host</h2>
             <div className="offer__host-user user">
-              <div className={`offer__avatar-wrapper ${currentCard?.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                <img className="offer__avatar user__avatar" src={currentCard?.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+              <div className={`offer__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
               </div>
               <span className="offer__user-name">
-                {currentCard?.host.name}
+                {offer.host.name}
               </span>
-              {currentCard?.host.isPro ?
+              {offer.host.isPro ?
                 <span className="offer__user-status">
-            Pro
+             Pro
                 </span>
                 : ''}
             </div>
             <div className="offer__description">
               <p className="offer__text">
-                {currentCard?.description}
+                {offer.description}
               </p>
             </div>
           </div>
           <section className="offer__reviews reviews">
-            <ReviewsCommentsList comments={comments.slice(0, Math.floor(Math.random() * 5))} />
-            <ReviewsComments />
+            <ReviewsCommentsList comments={comments} />
+            {authorizationStatus === AuthorizationStatus.Auth ?
+              <ReviewsComments offerId={offer.id}/>
+              : ''}
           </section>
         </div>
       </div>
     </Fragment>
   );
+
 }
