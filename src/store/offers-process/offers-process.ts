@@ -4,7 +4,6 @@ import {NameSpace, SortingType} from '../../conts';
 import {ChosenOffer, Offers} from '../../types/data';
 import {addFavorite} from '../api-actions/api-actions-favorite';
 
-
 type initialStateOffers = {
   city: string;
   filter: string;
@@ -53,9 +52,11 @@ export const offersProcess = createSlice({
       })
 
       .addCase(fetchChosenOffer.fulfilled, (state, action) => {
+        state.isError = false;
         state.chosenOffer = action.payload;
       })
       .addCase(fetchChosenOffer.rejected, (state) => {
+        state.isError = true;
         state.chosenOffer = null;
       })
       .addCase(fetchOtherOffers.fulfilled, (state, action) => {
@@ -95,9 +96,9 @@ export const sortedOffers = createSelector(
         case SortingType.Popular:
           return 1;
         case SortingType.PriceLowToHigh:
-          return offerB.price - offerA.price;
-        case SortingType.PriceHighToLow:
           return offerA.price - offerB.price;
+        case SortingType.PriceHighToLow:
+          return offerB.price - offerA.price;
         case SortingType.TopRatedFirst:
           return offerB.rating - offerA.rating;
         default:

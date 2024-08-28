@@ -10,20 +10,27 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import LoadingPage from '../../pages/loading-page/loading-page';
-import { useEffect } from 'react';
-import { fetchFavorite } from '../../store/api-actions/api-actions-favorite';
+import {useEffect } from 'react';
+import {fetchFavorite} from '../../store/api-actions/api-actions-favorite';
 
 
 export default function App(): JSX.Element {
   const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
   const isOffersLoading = useAppSelector(offersProcess.selectors.isOffersLoading);
   const dispatch = useAppDispatch();
-
+  const isError = useAppSelector(offersProcess.selectors.isError);
+  useAppSelector(offersProcess.selectors.isError);
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavorite());
     }
   }, [dispatch, authorizationStatus]);
+
+  if (isError) {
+    return (
+      <NotFoundPage />
+    );
+  }
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (

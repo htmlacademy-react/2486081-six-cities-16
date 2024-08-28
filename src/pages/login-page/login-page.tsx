@@ -1,8 +1,8 @@
 import {AppRoute, AuthorizationStatus, CITIES, ClassTypeHeader, messageForPassword} from '../../conts';
 import {loginAuthData} from '../../store/api-actions/api-actions-user';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {Link, Navigate} from 'react-router-dom';
-import {FormEvent, useRef} from 'react';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {FormEvent, useEffect, useRef} from 'react';
 import Header from '../../components/header/header';
 import {setCity } from '../../store/offers-process/offers-process';
 import { userProcess } from '../../store/user-process/user-process';
@@ -15,8 +15,16 @@ export default function LoginPage(): JSX.Element {
   const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorization === AuthorizationStatus.Auth) {
+      dispatch(fetchOffers());
+      dispatch(fetchFavorite());
+      navigate(AppRoute.Root);
+    }
+  }, [authorization, dispatch, navigate]);
 
   const onLoginSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -33,13 +41,7 @@ export default function LoginPage(): JSX.Element {
     }
   };
 
-  if (authorization === AuthorizationStatus.Auth) {
-    dispatch(fetchFavorite());
-    dispatch(fetchOffers());
-    return (
-      <Navigate to={AppRoute.Root} />
-    );
-  }
+
   const onCityClick = () => {
     dispatch(setCity(randomCity));
   };
