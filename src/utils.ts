@@ -33,4 +33,6 @@ export const sordCommentsByDate = (dateA: Comment, dateB: Comment): number => {
 
 export const getFirstLetterUperCase = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
 
+export const validateText = (text: string): boolean => text.length < 50 || text.length > 300;
 
+export const validateRating = (rating: number): boolean => rating === 0;

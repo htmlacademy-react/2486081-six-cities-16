@@ -5,20 +5,28 @@ import {CommentStatus, RATINGS_TITLES} from '../../conts';
 import {sendComments} from '../../store/api-actions/api-actions-comments';
 import {commentsProcess} from '../../store/comments-process/comments-process';
 import { toast } from 'react-toastify';
+import {validateRating, validateText } from '../../utils';
 
 export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.Element {
   const commentStatus = useAppSelector(commentsProcess.selectors.status);
   const formElement = useRef<HTMLFormElement>(null);
+
   const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
+  const [isDisableForm, setDisableForm] = useState<boolean>(false);
+
+  const isDisabled = validateText(text) || validateRating(rating);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (commentStatus === CommentStatus.FailToLoad) {
+      setDisableForm(false);
       toast.error('Couldn`t send a comment');
     }
 
     if (commentStatus === CommentStatus.Loaded) {
+      setDisableForm(false);
       formElement.current?.reset();
       setRating(0);
       setText('');
@@ -27,19 +35,12 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
 
   const handlerReviewsClick = (evt: FormEvent) => {
     evt.preventDefault();
-
+    setDisableForm(true);
     dispatch(sendComments({
       id: offerId,
       comment: text,
       rating: rating
     }));
-  };
-
-  const validateDescription = () => {
-    if (text.length < 50 || text.length > 300 || rating === 0) {
-      return true;
-    }
-    return false;
   };
 
   return (
@@ -50,6 +51,7 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
           <Fragment key={item.key}>
             <input className="form__rating-input visually-hidden" name="rating" value={item.value} id={item.id} type="radio"
               checked={Number(item.value) === rating}
+              disabled={isDisableForm}
               onChange={(evt) => setRating(Number(evt.target.value))}
             />
             <label htmlFor={item.id} className="reviews__rating-label form__rating-label" title={item.title}>
@@ -61,6 +63,7 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
         ))}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={isDisableForm}
         value={text}
         onChange={(evt) => setText(evt.target.value)}
       >
@@ -70,7 +73,7 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={validateDescription()}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabled || isDisableForm}>Submit</button>
       </div>
     </form>
   );
