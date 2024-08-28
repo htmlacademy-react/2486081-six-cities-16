@@ -1,19 +1,28 @@
-import {ClassTypeHeader, ClassTypeOffers, ClassTypeOffersList} from '../../conts';
+import {AuthorizationStatus, ClassTypeHeader, ClassTypeOffers, ClassTypeOffersList} from '../../conts';
 import {offersProcess, setCity, sortedOffers} from '../../store/offers-process/offers-process';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {MouseEvent, useState} from 'react';
+import {MouseEvent, useEffect, useState} from 'react';
 import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
 import Sorting from '../../components/sorting/sorting';
 import ListOffers from '../../components/list-offers/list-offers';
 import Map from '../../components/map/map';
+import { userProcess } from '../../store/user-process/user-process';
+import { fetchOffers } from '../../store/api-actions/api-actions-offers';
 
 
 export default function MainPage(): JSX.Element {
   const offers = useAppSelector(sortedOffers);
   const city = useAppSelector(offersProcess.selectors.city);
-  const dispatch = useAppDispatch();
   const [selectedPoint, setSelectedPoint] = useState<string| undefined>(undefined);
+  const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Unknown) {
+      dispatch(fetchOffers());
+    }
+  }, [authorizationStatus, dispatch]);
 
   const handleCityClick = (evt : MouseEvent<HTMLElement>) => {
     const changeCity = (evt.target as HTMLElement).innerText;

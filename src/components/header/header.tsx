@@ -43,7 +43,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" to={AppRoute.Login} onClick={onDeleteToken}>
+                    <Link className="header__nav-link" to={className === ClassTypeHeader.MAIN ? AppRoute.Root : AppRoute.Login} onClick={onDeleteToken}>
                       <span className="header__signout">Sign out</span>
                     </Link>
                   </li>
@@ -54,7 +54,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__signout">Sign in</span>
+                      <span className="header__login">Sign in</span>
                     </Link>
                   </li>
                 </ul>}

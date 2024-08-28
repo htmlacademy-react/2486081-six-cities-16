@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {addFavorite, fetchFavorite} from '../api-actions/api-actions-favorite';
 import {Offer, Offers} from '../../types/data';
 import {NameSpace} from '../../conts';
+import {logoutAuthData} from '../api-actions/api-actions-user';
 
 type initialStateFavorite = {
   favorite: Offers;
@@ -26,6 +27,9 @@ export const favoriteProcess = createSlice({
         } else {
           state.favorite = state.favorite.filter((item) => item.id !== action.payload.id);
         }
+      })
+      .addCase(logoutAuthData.fulfilled, (state) => {
+        state.favorite = [];
       });
   },
   selectors: {

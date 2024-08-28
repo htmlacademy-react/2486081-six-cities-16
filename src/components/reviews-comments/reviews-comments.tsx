@@ -18,9 +18,11 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
       toast.error('Couldn`t send a comment');
     }
 
-    formElement.current?.reset();
-    setRating(0);
-    setText('');
+    if (commentStatus === CommentStatus.Loaded) {
+      formElement.current?.reset();
+      setRating(0);
+      setText('');
+    }
   }, [commentStatus]);
 
   const handlerReviewsClick = (evt: FormEvent) => {
