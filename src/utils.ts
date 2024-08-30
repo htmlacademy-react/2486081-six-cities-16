@@ -1,3 +1,4 @@
+import { DateFormat, MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT } from './conts';
 import {Comment, Offers} from './types/data';
 
 type OffersByCityType = {
@@ -16,10 +17,10 @@ export const getOffersByCity = (offers: Offers) => {
 
 export const getIndex = (items: string[], element: string): number => [...items].reverse().lastIndexOf(element) + 1;
 
-export const getCountStars = (rating: number): number => rating * 100 / 5;
+export const getCountStars = (rating: number): number => Math.round(rating) * 100 / 5;
 
 export const getDateForman = (data:string) => {
-  const date = data.slice(0,10);
+  const date = data.slice(DateFormat.Start, DateFormat.End);
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const now = new Date(date);
 
@@ -31,8 +32,8 @@ export const sordCommentsByDate = (dateA: Comment, dateB: Comment): number => {
   return date;
 };
 
-export const getFirstLetterUperCase = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
+export const getFirstLetterUpperCase = (string: string): string => string.charAt(0).toUpperCase() + string.slice(1);
 
-export const validateText = (text: string): boolean => text.length < 50 || text.length > 300;
+export const validateText = (text: string): boolean => text.length < MIN_LENGTH_COMMENT || text.length > MAX_LENGTH_COMMENT;
 
 export const validateRating = (rating: number): boolean => rating === 0;

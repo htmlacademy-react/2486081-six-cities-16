@@ -1,8 +1,8 @@
-import {AppRoute, AuthorizationStatus} from '../../conts';
+import {AppRoute, AuthorizationStatus, FavoriteStatus, QuantityImages} from '../../conts';
 import {ReviewsOffersProps} from './type';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {favoriteProcess} from '../../store/favorite-process/favorite-process';
-import {getCountStars, getFirstLetterUperCase} from '../../utils';
+import {getCountStars, getFirstLetterUpperCase} from '../../utils';
 import {userProcess} from '../../store/user-process/user-process';
 import {addFavorite} from '../../store/api-actions/api-actions-favorite';
 import {useNavigate} from 'react-router-dom';
@@ -13,10 +13,10 @@ import ButtonFavorite from '../button-favorite/button-favorite';
 
 export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX.Element {
   const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
-  const favorite = useAppSelector(favoriteProcess.selectors.favorite);
+  const favoritesOffers = useAppSelector(favoriteProcess.selectors.favorite);
 
-  const checkFavoriteOffer = favorite.find((off) => off.id === offer.id);
-  const setStatus = () => checkFavoriteOffer === undefined ? 1 : 0;
+  const checkFavoriteOffer = favoritesOffers.find((favoriteOffer) => favoriteOffer.id === offer.id);
+  const setStatus = () => checkFavoriteOffer === undefined ? FavoriteStatus.Add : FavoriteStatus.Delete;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX
     <Fragment>
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {offer.images.slice(0,6).map((img) =>(
+          {offer.images.slice(QuantityImages.Min, QuantityImages.Max).map((img) =>(
             <div className="offer__image-wrapper" key={img}>
               <img className="offer__image" src={img} alt="Photo studio"/>
             </div>
@@ -64,7 +64,7 @@ export default function ReviewsOffers({offer, comments}:ReviewsOffersProps): JSX
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
-              {getFirstLetterUperCase(offer.type)}
+              {getFirstLetterUpperCase(offer.type)}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
               {offer.bedrooms !== 1 ? `${offer.bedrooms} Bedrooms` : '1 Bedroom'}

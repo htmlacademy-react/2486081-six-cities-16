@@ -11,7 +11,7 @@ export default function FavoritePage(): JSX.Element {
 
   return (
     <div className={`page ${favoriteCount.length === 0 ? 'page--favorites-empty' : ''}`} >
-      <Header className={ClassTypeHeader.OTHERS} />
+      <Header className={ClassTypeHeader.Others} />
       {favoriteCount.length !== 0 ?
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">

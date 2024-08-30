@@ -1,12 +1,16 @@
-import {ClassTypeOffers, ClassTypeOffersList} from '../../conts';
-import {useAppSelector} from '../../hooks';
+import {AppRoute, ClassTypeOffers, ClassTypeOffersList} from '../../conts';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {favoriteProcess} from '../../store/favorite-process/favorite-process';
 import {getOffersByCity} from '../../utils';
+import {setCity} from '../../store/offers-process/offers-process';
+import {Link} from 'react-router-dom';
 import ListOffers from '../list-offers/list-offers';
+
 
 export default function ListFavorites(): JSX.Element {
   const offers = useAppSelector(favoriteProcess.selectors.favorite);
   const favoriteOffers = getOffersByCity(offers);
+  const dispatch = useAppDispatch();
 
   return (
     <ul className="favorites__list">
@@ -14,12 +18,12 @@ export default function ListFavorites(): JSX.Element {
         <li className="favorites__locations-items" key={city}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={() => dispatch(setCity(city))}>
                 <span>{city}</span>
-              </a>
+              </Link>
             </div>
           </div>
-          <ListOffers offers={offer} classNamePlaceList={ClassTypeOffersList.FAVORITE} classNamePlace={ClassTypeOffers.FAVORITE} />
+          <ListOffers offers={offer} classNamePlaceList={ClassTypeOffersList.Favorite} classNamePlace={ClassTypeOffers.Favorite} />
         </li>
       ))}
     </ul>

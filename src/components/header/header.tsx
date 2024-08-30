@@ -12,7 +12,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
   const user = useAppSelector(userProcess.selectors.user);
   const dispatch = useAppDispatch();
 
-  const onDeleteToken = () => {
+  const handleSignOutClick = () => {
     dispatch(logoutAuthData());
   };
 
@@ -21,7 +21,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            {className === ClassTypeHeader.MAIN ?
+            {className === ClassTypeHeader.Main ?
               <a className={`header__logo-link ${className}`}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </a>
@@ -30,7 +30,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>}
           </div>
-          {className === ClassTypeHeader.LOGIN ? '' :
+          {className === ClassTypeHeader.Login ? '' :
             <nav className="header__nav">
               {authorizationStatus === AuthorizationStatus.Auth ?
                 <ul className="header__nav-list">
@@ -43,7 +43,7 @@ export default function Header({className}: HeaderProps): JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" to={className === ClassTypeHeader.MAIN ? AppRoute.Root : AppRoute.Login} onClick={onDeleteToken}>
+                    <Link className="header__nav-link" to={className === ClassTypeHeader.Main ? AppRoute.Root : AppRoute.Login} onClick={handleSignOutClick}>
                       <span className="header__signout">Sign out</span>
                     </Link>
                   </li>

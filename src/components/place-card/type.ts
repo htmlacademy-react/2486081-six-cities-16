@@ -4,7 +4,6 @@ import {MouseEvent} from 'react';
 export type PlaceCardProps = {
   offers: Offer;
   className: string;
-  handlerEnter?: (evt: MouseEvent<HTMLLIElement>) => void;
-  handlerLeave?: (evt: MouseEvent<HTMLLIElement>) => void;
-  handlerClick?: (evt: MouseEvent<HTMLLIElement>) => void;
+  onCardEnter?: (evt: MouseEvent<HTMLLIElement>) => void;
+  onCardLeave?: (evt: MouseEvent<HTMLLIElement>) => void;
 }

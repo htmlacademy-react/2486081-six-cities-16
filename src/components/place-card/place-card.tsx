@@ -1,6 +1,6 @@
 import {AppRoute, AuthorizationStatus, ClassTypeOffers} from '../../conts';
 import {PlaceCardProps} from './type';
-import {getCountStars, getFirstLetterUperCase} from '../../utils';
+import {getCountStars, getFirstLetterUpperCase} from '../../utils';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {addFavorite} from '../../store/api-actions/api-actions-favorite';
@@ -8,15 +8,15 @@ import {favoriteProcess} from '../../store/favorite-process/favorite-process';
 import {userProcess} from '../../store/user-process/user-process';
 import ButtonFavorite from '../button-favorite/button-favorite';
 
-export default function PlaceCard({offers, className, handlerEnter, handlerLeave, handlerClick}: PlaceCardProps): JSX.Element {
+export default function PlaceCard({offers, className, onCardEnter, onCardLeave}: PlaceCardProps): JSX.Element {
   const authorizationStatus = useAppSelector(userProcess.selectors.authorizationStatus);
   const navigate = useNavigate();
   const favorite = useAppSelector(favoriteProcess.selectors.favorite);
   const dispatch = useAppDispatch();
   const {id, title, type, price, previewImage, isPremium, isFavorite, rating} = offers;
 
-  const width = className === ClassTypeOffers.FAVORITE ? 150 : 260;
-  const height = className === ClassTypeOffers.FAVORITE ? 110 : 200;
+  const width = className === ClassTypeOffers.Favorite ? 150 : 260;
+  const height = className === ClassTypeOffers.Favorite ? 110 : 200;
 
   const checkFavoriteOffer = favorite.find((offer) => offer.id === id);
   const setStatus = () => checkFavoriteOffer === undefined ? 1 : 0;
@@ -32,7 +32,7 @@ export default function PlaceCard({offers, className, handlerEnter, handlerLeave
   };
 
   return (
-    <article className={`${className}__card place-card` } id={id} onMouseEnter={handlerEnter} onMouseLeave={handlerLeave} onClick={handlerClick}>
+    <article className={`${className}__card place-card` } id={id} onMouseEnter={onCardEnter} onMouseLeave={onCardLeave} onClick={() => scrollTo(0, 0)}>
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -43,7 +43,7 @@ export default function PlaceCard({offers, className, handlerEnter, handlerLeave
           <img className="place-card__image" src={previewImage} width={width} height={height} alt="Place image"/>
         </Link>
       </div>
-      <div className={`${className === ClassTypeOffers.FAVORITE ? 'favorites__card-info' : ''} place-card__info`}>
+      <div className={`${className === ClassTypeOffers.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -60,7 +60,7 @@ export default function PlaceCard({offers, className, handlerEnter, handlerLeave
         <h2 className="place-card__name">
           <Link to={AppRoute.Offer.replace(':id', offers.id)}>{title}</Link>
         </h2>
-        <p className="place-card__type">{getFirstLetterUperCase(type)}</p>
+        <p className="place-card__type">{getFirstLetterUpperCase(type)}</p>
       </div>
     </article>
   );

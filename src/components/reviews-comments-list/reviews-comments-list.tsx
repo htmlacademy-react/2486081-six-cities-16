@@ -1,3 +1,4 @@
+import {DateFormat, QuantityComments} from '../../conts';
 import {getCountStars,getDateForman} from '../../utils';
 import {commentsProps} from './type';
 import {Fragment} from 'react';
@@ -9,7 +10,7 @@ export default function ReviewsCommentsList({comments}: commentsProps): JSX.Elem
     <Fragment>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {comments.slice(0, 10).map((comment) => (
+        {comments.slice(QuantityComments.Min, QuantityComments.Max).map((comment) => (
           <li className="reviews__item" key={comment.id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -29,7 +30,7 @@ export default function ReviewsCommentsList({comments}: commentsProps): JSX.Elem
               <p className="reviews__text">
                 {comment.comment}
               </p>
-              <time className="reviews__time" dateTime={comment.date.slice(0, 10)}>{getDateForman(comment.date)}</time>
+              <time className="reviews__time" dateTime={comment.date.slice(DateFormat.Start, DateFormat.End)}>{getDateForman(comment.date)}</time>
             </div>
           </li>
         ))}

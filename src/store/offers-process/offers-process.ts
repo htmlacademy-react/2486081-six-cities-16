@@ -3,6 +3,7 @@ import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {NameSpace, SortingType} from '../../conts';
 import {ChosenOffer, Offers} from '../../types/data';
 import {addFavorite} from '../api-actions/api-actions-favorite';
+import { logoutAuthData } from '../api-actions/api-actions-user';
 
 type initialStateOffers = {
   city: string;
@@ -72,6 +73,13 @@ export const offersProcess = createSlice({
         }
         if (offer) {
           offer.isFavorite = action.payload.isFavorite;
+        }
+      })
+      .addCase(logoutAuthData.fulfilled, (state)=> {
+        for (const offer of state.offers) {
+          if (offer.isFavorite === true) {
+            offer.isFavorite = false;
+          }
         }
       });
   },
