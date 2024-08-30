@@ -1,4 +1,4 @@
-export const messageForPassword = 'Пароль должен состоять из латинских букв и цифр и символов пример "1q"';
+export const MESSAGE_FOR_PASSWORD = 'Пароль должен состоять из латинских букв и цифр и символов пример "1q"';
 
 export const RATINGS_TITLES = [
   {title:'perfect', id: '5-stars', value: '5', key: '1-id'},
@@ -7,6 +7,10 @@ export const RATINGS_TITLES = [
   {title:'badly', id: '2-stars', value: '2', key: '4-id'},
   {title:'terribly', id: '1-stars', value: '1', key: '5-id'}
 ];
+
+export const MAX_LENGTH_COMMENT = 300;
+
+export const MIN_LENGTH_COMMENT = 50;
 
 export const TYPES_SORT = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
@@ -61,20 +65,49 @@ export enum SortingType {
 }
 
 export const ClassTypeOffersList = {
-  MAIN: 'cities__places-list places__list tabs__content',
-  FAVORITE: 'favorites__places',
-  OFFER: 'near-places__list places__list'
-};
+  Main: 'cities__places-list places__list tabs__content',
+  Favorite: 'favorites__places',
+  Offer: 'near-places__list places__list'
+} as const;
 
 export const ClassTypeOffers = {
-  MAIN: 'cities',
-  FAVORITE: 'favorites',
-  OFFER: 'near-places'
-};
+  Main: 'cities',
+  Favorite: 'favorites',
+  Offer: 'near-places'
+} as const;
 
 export const ClassTypeHeader = {
-  MAIN: 'header__logo-link--active',
-  LOGIN: 'login',
-  OTHERS: ''
-};
+  Main: 'header__logo-link--active',
+  Login: 'login',
+  Others:''
+} as const;
 
+export enum FavoriteStatus {
+  Add = 1,
+  Delete = 0
+}
+
+export enum QuantityImages {
+  Max = 6,
+  Min = 0
+}
+
+export enum QuantityComments {
+ Max = 10,
+ Min = 0
+}
+
+export enum DateFormat {
+  Start = 0,
+  End = 10
+}
+
+export enum QuantityNearPlaces {
+  Max = 3,
+  Min = 0
+}
+
+export enum QuantityOffersOnMap {
+  Max = 4,
+  Min = 0
+}

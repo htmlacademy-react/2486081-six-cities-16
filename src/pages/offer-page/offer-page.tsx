@@ -1,4 +1,4 @@
-import {ClassTypeHeader, ClassTypeOffers, ClassTypeOffersList} from '../../conts';
+import {ClassTypeHeader, ClassTypeOffers, ClassTypeOffersList, QuantityNearPlaces, QuantityOffersOnMap} from '../../conts';
 import {fetchChosenOffer, fetchOtherOffers} from '../../store/api-actions/api-actions-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {offersProcess, setCity} from '../../store/offers-process/offers-process';
@@ -24,7 +24,7 @@ export default function OfferPage(): JSX.Element {
   const otherPlaces = useAppSelector(offersProcess.selectors.otherOffers);
   const isOffersLoading = useAppSelector(offersProcess.selectors.isOffersLoading);
 
-  const offers = currentOffer ? [currentOffer, ...otherPlaces].slice(0, 4) : [];
+  const offers = currentOffer ? [currentOffer, ...otherPlaces].slice(QuantityOffersOnMap.Min, QuantityOffersOnMap.Max) : [];
 
   useEffect(() => {
     Promise.all([dispatch(fetchChosenOffer(currentId!)), dispatch(fetchComments(currentId!)), dispatch(fetchOtherOffers(currentId!))]);
@@ -44,7 +44,7 @@ export default function OfferPage(): JSX.Element {
 
   return (
     <div className="page">
-      <Header className={ClassTypeHeader.OTHERS} />
+      <Header className={ClassTypeHeader.Others} />
       <main className="page__main page__main--offer">
         <section className="offer">
           <ReviewsOffers offer={currentOffer} comments={currentComments.toSorted(sordCommentsByDate)}/>
@@ -53,7 +53,7 @@ export default function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <ListOffers offers={otherPlaces.slice(0,3)} classNamePlaceList={ClassTypeOffersList.OFFER} classNamePlace={ClassTypeOffers.OFFER} />
+            <ListOffers offers={otherPlaces.slice(QuantityNearPlaces.Min,QuantityNearPlaces.Max)} classNamePlaceList={ClassTypeOffersList.Offer} classNamePlace={ClassTypeOffers.Offer} />
           </section>
         </div>
       </main>

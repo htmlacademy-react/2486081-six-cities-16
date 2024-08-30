@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {APIRoute} from '../../conts';
+import {APIRoute, NameSpace} from '../../conts';
 import {AppDispatch, State} from '../../types/state';
 import {AxiosInstance} from 'axios';
 import {Comment, Comments} from '../../types/data';
@@ -11,7 +11,7 @@ export const fetchComments = createAsyncThunk<Comments, string, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'comments/id',
+  `${NameSpace.Comments}/getComments`,
   async (id, {extra: api}) => {
     const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
 
@@ -23,7 +23,7 @@ export const sendComments = createAsyncThunk<Comment, CommentData, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'comments/id/send',
+  `${NameSpace.Comments}/addComment`,
   async ({id, comment, rating}, {extra: api}) => {
     const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
 

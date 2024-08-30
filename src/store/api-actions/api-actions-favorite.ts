@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ChosenOffer, Offers} from '../../types/data';
 import {AppDispatch, State} from '../../types/state';
 import {AxiosInstance} from 'axios';
-import {APIRoute} from '../../conts';
+import {APIRoute, NameSpace} from '../../conts';
 import {FavoriteData} from '../../types/api-actions';
 
 export const fetchFavorite = createAsyncThunk<Offers, undefined, {
@@ -10,7 +10,7 @@ export const fetchFavorite = createAsyncThunk<Offers, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'favorite/',
+  `${NameSpace.Favorite}/getFavorite`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<Offers>(APIRoute.Favorite);
 
@@ -22,7 +22,7 @@ export const addFavorite = createAsyncThunk<ChosenOffer, FavoriteData, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'favorite/offerId/status',
+  `${NameSpace.Favorite}/addFavorite`,
   async({id, status}, {extra: api}) => {
     const {data} = await api.post<ChosenOffer>(`${APIRoute.Favorite}/${id}/${status}`);
 

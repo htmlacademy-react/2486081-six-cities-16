@@ -29,7 +29,7 @@ export default function MainPage(): JSX.Element {
     dispatch(setCity(changeCity));
   };
 
-  const cardMouseEnterHandler = (itemIdCard: string | undefined) => {
+  const handleCardMouseEnter = (itemIdCard: string | undefined) => {
     const allId = offers.map((offer) => offer.id);
     const currentPoint = allId.find((id) => id === itemIdCard);
     setSelectedPoint(currentPoint);
@@ -37,7 +37,7 @@ export default function MainPage(): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <Header className={ClassTypeHeader.MAIN}/>
+      <Header className={ClassTypeHeader.Main}/>
       {offers.length === 0 ?
         <main className="page__main page__main--index page__main--index-empty">
           <h1 className="visually-hidden">Cities</h1>
@@ -64,7 +64,7 @@ export default function MainPage(): JSX.Element {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city}</b>
                 <Sorting />
-                <ListOffers offers={offers} classNamePlaceList={ClassTypeOffersList.MAIN} classNamePlace={ClassTypeOffers.MAIN} onCardMouseEnter={cardMouseEnterHandler}/>
+                <ListOffers offers={offers} classNamePlaceList={ClassTypeOffersList.Main} classNamePlace={ClassTypeOffers.Main} onCardMouseEnter={handleCardMouseEnter}/>
               </section>
               <div className="cities__right-section">
                 <Map className='cities' offers={offers} selectedPoint={selectedPoint} />

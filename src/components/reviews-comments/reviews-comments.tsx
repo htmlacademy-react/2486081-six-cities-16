@@ -33,7 +33,7 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
     }
   }, [commentStatus]);
 
-  const handlerReviewsClick = (evt: FormEvent) => {
+  const handleReviewsFormClick = (evt: FormEvent) => {
     evt.preventDefault();
     setDisableForm(true);
     dispatch(sendComments({
@@ -44,7 +44,7 @@ export default function ReviewsComments({offerId}: ReviewsCommentsProps): JSX.El
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" ref={formElement} onSubmit={handlerReviewsClick}>
+    <form className="reviews__form form" action="#" method="post" ref={formElement} onSubmit={handleReviewsFormClick}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {RATINGS_TITLES.map((item) => (
